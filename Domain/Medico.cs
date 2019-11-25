@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Domain
 {
-    class Medico
+   public class Medico
     {
         [Key]
         public int Id { get; set; }
@@ -23,9 +23,9 @@ namespace Domain
         [Required(ErrorMessage = "Campo obrigatório!")]
         public int Especialidade { get; set; }
 
-      /*[Display(Name = "Categoria:")]
+        [Display(Name = "Categoria:")]
         [Required(ErrorMessage = "Campo obrigatório!")]
         public Categoria Categoria { get; set; }
-        */
+        
     }
 }

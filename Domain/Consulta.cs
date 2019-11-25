@@ -5,16 +5,16 @@ using System.Text;
 
 namespace Domain
 {
-    class Consulta
+    public class Consulta
     {
         [Key]
         public int Id { get; set; }
 
         public DateTime CriadoEm { get; set; }
 
-        public Medico medico { get; set; }
+        public Medico Medico { get; set; }
 
-        public Paciente paciente { get; set; }
+        public Paciente Paciente { get; set; }
 
         [Display(Name = "Anotações:")]
         [Required(ErrorMessage = "Campo obrigatório!")]
