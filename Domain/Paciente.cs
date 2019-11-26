@@ -28,6 +28,18 @@ namespace Domain
         [Required(ErrorMessage = "Campo obrigatório!")]
         public string Telefone { get; set; }
 
+        [Display(Name = "Login:")]
+        public string Login { get; set; }
+
+        [Display(Name = "Senha:")]
+        public string Senha { get; set; }
+
+        [Display(Name = "Confirmação da senha:")]
+        [NotMapped]
+        [Compare("Senha", ErrorMessage = "Os campos não coincidem!")]
+        public string ConfirmacaoSenha { get; set; }
+
+
 
     }
 }

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain
 {
-   public class Medico
+    public class Medico
     {
         [Key]
         public int Id { get; set; }
@@ -26,6 +24,17 @@ namespace Domain
         [Display(Name = "Categoria:")]
         [Required(ErrorMessage = "Campo obrigatório!")]
         public Categoria Categoria { get; set; }
-        
+
+        [Display(Name = "Login:")]
+        public string Login { get; set; }
+
+        [Display(Name = "Senha:")]
+        public string Senha { get; set; }
+
+        [Display(Name = "Confirmação da senha:")]
+        [NotMapped]
+        [Compare("Senha", ErrorMessage = "Os campos não coincidem!")]
+        public string ConfirmacaoSenha { get; set; }
+
     }
 }

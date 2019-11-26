@@ -6,18 +6,18 @@ using System.Text;
 
 namespace Repository
 {
-    class CategoriaDao
+    public class CategoriaDao
     {
-        private static Context ctx; //= SingletonContext.GetInstance();
+        private Context ctx; //= SingletonContext.GetInstance();
 
-        public static Categoria BuscarCategoriaPorNome
+        public Categoria BuscarCategoriaPorNome
             (Categoria c) =>
             ctx.Categorias.FirstOrDefault
             (x => x.Nome.Equals(c.Nome));
 
-        public static List<Categoria> ListarCategoria() => ctx.Categorias.ToList();
+        public List<Categoria> ListarCategoria() => ctx.Categorias.ToList();
 
-        public static bool CadastrarCategoria(Categoria c)
+        public bool CadastrarCategoria(Categoria c)
         {
             if (BuscarCategoriaPorNome(c) == null)
             {
@@ -28,7 +28,7 @@ namespace Repository
             return false;
         }
 
-        public static Categoria BuscarCategoriaPorId(int id)
+        public Categoria BuscarCategoriaPorId(int id)
         {
             return ctx.Categorias.Find(id);
         }

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Repository
 {
-    class ConsultaDao
+    public class ConsultaDao
     {
         private static Context ctx; //= SingletonContext.GetInstance();
 

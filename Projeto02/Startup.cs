@@ -34,16 +34,16 @@ namespace Projeto02
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            /*
+            
                 //Configurando a injeção de dependência
-                services.AddScoped<ProdutoDAO>();
-                services.AddScoped<CategoriaDAO>();
-                services.AddScoped<UsuarioDAO>();
-                services.AddScoped<ItemVendaDAO>();
-                services.AddScoped<UtilsSession>();
-                services.AddHttpContextAccessor();
+            services.AddScoped<MedicoDao>();
+            services.AddScoped<PacienteDao>();
+            services.AddScoped<CategoriaDao>();
+            services.AddScoped<ConsultaDao>();
+            services.AddScoped<DisponibilidadeDao>();
+            services.AddHttpContextAccessor();
 
-            */
+            
 
             services.AddDbContext<Context>
                 (options => options.UseSqlServer

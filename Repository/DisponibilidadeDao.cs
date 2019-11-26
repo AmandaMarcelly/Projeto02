@@ -7,11 +7,11 @@ using System.Text;
 
 namespace Repository
 {
-    class DisponibilidadeDao
+    public class DisponibilidadeDao
     {
         private static Context ctx; //= SingletonContext.GetInstance();
 
-        public static bool CadastrarDisponibilidade(Disponibilidade d)
+        public bool CadastrarDisponibilidade(Disponibilidade d)
         {
 
             if (BuscarDisponibilidadePorMedico(d.Medico) == null)
@@ -23,19 +23,19 @@ namespace Repository
             return false;
         }
 
-        public static List<Disponibilidade> ListarDisponiblidade() => ctx.Disponibilidades.Include("Medico").ToList();
+        public List<Disponibilidade> ListarDisponiblidade() => ctx.Disponibilidades.Include("Medico").ToList();
 
-        public static Disponibilidade BuscarDisponibilidadePorMedico(Medico m)
+        public Disponibilidade BuscarDisponibilidadePorMedico(Medico m)
         {
             return ctx.Disponibilidades.FirstOrDefault(x => x.Medico.Id.Equals(m.Id));
         }
 
-        public static void RemoverDisponbilidade(Disponibilidade d)
+        public void RemoverDisponbilidade(Disponibilidade d)
         {
             ctx.Disponibilidades.Remove(d);
             ctx.SaveChanges();
         }
-        public static void AlterarDisponibilidade(Disponibilidade d)
+        public void AlterarDisponibilidade(Disponibilidade d)
         {
             ctx.Entry(d).State = EntityState.Modified;
             ctx.SaveChanges();
