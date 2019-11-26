@@ -1,5 +1,13 @@
 ﻿<!DOCTYPE html>
 <html>
+
+<!--
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+-->
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,6 +25,7 @@
     </environment>
 </head>
 <body>
+    @*Barra de navegação*@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -31,7 +40,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">Cadastro</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>
             </div>
@@ -40,13 +49,26 @@
 
     <partial name="_CookieConsentPartial" />
 
+    @* Conteúdo *@
+    <div class="m-5">
+        @RenderBody()
+    </div>
+
+
+
+
+    @*Rodapé*@
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2019 - Projeto02</p>
+            <p style="text-align:center">
+                &copy; @DateTime.Now.Year - Projeto 02 Amanda Marcelly
+            </p>
         </footer>
     </div>
+
+
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -70,5 +92,6 @@
     </environment>
 
     @RenderSection("Scripts", required: false)
+
 </body>
 </html>
