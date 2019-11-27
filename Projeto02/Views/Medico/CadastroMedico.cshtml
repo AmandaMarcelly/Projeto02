@@ -1,0 +1,57 @@
+﻿
+@model Medico
+
+<form asp-action="Cadastrar" method="post" enctype="multipart/form-data">
+    <fieldset>
+        <div class="jumbotron">
+
+            <legend>Cadastrar Paciente</legend>
+            <div asp-validation-summary="ModelOnly"
+                 class="text-primary"></div>
+
+
+            <div class="form-group" id="Nome">
+                <label asp-for="Nome"></label>
+                <input type="text" asp-for="Nome"
+                       class="form-control" />
+                <span asp-validation-for="Nome"
+                      class="text-primary"></span>
+            </div>
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-primary"></div>
+            <div class="form-group" id="Crm">
+                <label asp-for="Crm"></label>
+                <input type="text" asp-for="Crm"
+                       class="form-control" />
+                <span asp-validation-for="Crm"
+                      class="text-primary"></span>
+            </div>
+
+
+
+            <div class="form-group" id="Especialidade">
+                <label asp-for="Especialidade"></label>
+                <input type="text" asp-for="Especialidade"
+                       class="form-control" />
+                <span asp-validation-for="Especialidade"
+                      class="text-primary"></span>
+            </div>
+
+
+
+            <div class="form-group" id="Categoria">
+                <label asp-for="Categoria"></label>
+                <input type="text" asp-for="Categoria"
+                       class="form-control" />
+                <span asp-validation-for="Categoria"
+                      class="text-primary"></span>
+            </div>
+
+            <button type="button" class="btn btn-outline-primary">Cadastrar</button>
+
+
+        </div>
+
+    </fieldset>
+</form>
