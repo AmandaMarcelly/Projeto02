@@ -1,13 +1,21 @@
 ﻿@model Medico
 
+    <fieldset>
+        <div class="jumbotron">
 
-<div class="jumbotron">
-    <h1 class="display-3" style="text-align:center">
-        <font style="alinhamento vertical: herdar" "> <font style =" alinhamento vertical: herdar; "> Anotações: </font> </font> </ h1 >
-        <p class="lead"> <font style="alinhamento vertical: herdar" "> <font style =" alinhamento vertical: herdar; "> Insira aqui as anotações sobre a consulta realizada: </font> </font> </p>
-        <hr class="my-4">
-      
+            <div class="form-group">
+
+                <h2>Anotações</h2>
+                <p class="text-muted">Insira aqui as suas anotações sobre a consulta.</p>
+
+                <label for="exampleTextarea"></label>
+                <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+            </div>
+
+            <button type="button" class="btn btn-outline-primary">Salvar</button>
+        <button type="button" class="btn btn-outline-primary">Voltar</button>
         
         
-        <a class="btn btn-primary btn-lg" href="#" role="button"> <font style="alinhamento vertical: herdar;"> <font style="alinhamento vertical: herdar"> Médico </font> </font> </a>
-        </p>
+        </div>
+    </fieldset>
+
