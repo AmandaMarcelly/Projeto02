@@ -1,22 +1,24 @@
 ﻿@model Medico
 
-    <fieldset>
-        <div class="jumbotron">
+<fieldset>
+    <div class="jumbotron">
 
-            <div class="form-group">
+        <legend>Cadastrar Disponibilidade</legend>
+        <div asp-validation-summary="ModelOnly"
+             class="text-primary"></div>
 
-                <h2>Anotações</h2>
-                <p class="text-muted">Insira aqui as suas anotações sobre a consulta.</p>
-
-                <label for="exampleTextarea"></label>
-                <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+        <div class="form-group">
+            <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="customSwitch1" checked="">
+                <label class="custom-control-label" for="customSwitch1">Toggle this switch element</label>
             </div>
 
-            <button type="button" class="btn btn-outline-primary">Salvar</button>
-        <button type="button" class="btn btn-outline-primary">Voltar</button>
-        
 
-        
+            <button type="button" class="btn btn-outline-primary">Cadastrar</button>
+
+
         </div>
-    </fieldset>
+
+</fieldset>
+
 
