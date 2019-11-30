@@ -1,7 +1,7 @@
 ﻿
 @model Paciente
 
-<form asp-action="Cadastrar" method="post" enctype="multipart/form-data">
+<form asp-action="CadastroPaciente" method="post" enctype="multipart/form-data">
     <fieldset>
         <div class="jumbotron">
 
@@ -43,7 +43,7 @@
                     <span asp-validation-for="Telefone"
                           class="text-primary"></span>
                 </div>
-                <button type="button" class="btn btn-outline-primary">Cadastrar</button>
+                <button type="submit" class="btn btn-outline-primary">Cadastrar</button>
 
 
             </div>

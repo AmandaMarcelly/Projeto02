@@ -1,7 +1,7 @@
 ﻿
 @model Medico
 
-<form asp-action="Cadastrar" method="post" enctype="multipart/form-data">
+<form asp-action="CadastroMedico" method="post" enctype="multipart/form-data">
     <fieldset>
         <div class="jumbotron">
 
@@ -42,13 +42,16 @@
 
             <div class="form-group" id="Categoria">
                 <label asp-for="Categoria"></label>
-                <input type="text" asp-for="Categoria"
+                <select asp-items="@ViewBag.Categorias" class="form-control" name="drpCategorias">
+                    <option> -- SELECIONE --</option>
+                </select>
+                <!--input type="text" asp-for="Categoria"
                        class="form-control" />
                 <span asp-validation-for="Categoria"
-                      class="text-primary"></span>
+                      class="text-primary"></span-->
             </div>
 
-            <button type="button" class="btn btn-outline-primary">Cadastrar</button>
+            <button type="submit" class="btn btn-outline-primary">Cadastrar</button>
 
 
         </div>

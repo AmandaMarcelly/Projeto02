@@ -22,22 +22,23 @@ namespace Projeto02.Controllers
             return View(_categoriaDao.ListarCategoria());
         }
 
-        public IActionResult Create()
+        public IActionResult CadastroCategoria()
         {
-            return View();
+            Categoria categoria = new Categoria();
+            return View(categoria);
         }
 
         [HttpPost]
-        public IActionResult Create(Categoria categoria)
+        public IActionResult CadastroCategoria(Categoria categoria)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 if (_categoriaDao.CadastrarCategoria(categoria))
                 {
                     return RedirectToAction("Index");
                 }
                 ModelState.AddModelError("", "Essa categoria já existe!");
-            }
+            //}
             return (View(categoria));
         }
     }

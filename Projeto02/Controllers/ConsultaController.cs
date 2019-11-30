@@ -13,14 +13,28 @@ namespace Projeto02.Controllers
     {
         private readonly ConsultaDao _consultaDao;
 
+        Consulta _consulta = new Consulta();
+
         public ConsultaController(ConsultaDao consultaDao)
         {
             _consultaDao = consultaDao;
         }
 
-        public IActionResult AnotacaoSobreConsulta()
+        public IActionResult AnotacaoSobreConsulta(Consulta consulta)
         {
-            return View();
+            _consulta = consulta;
+            return View(consulta);
+        }
+
+        [HttpPost]
+        public IActionResult AnotacaoSobreConsulta(String anotacao)
+        {
+            _consulta.Anotacao = anotacao;
+            if (_consultaDao.AlterarConsulta(_consulta))
+            {
+                return RedirectToAction("Index");
+            }
+            return View(_consulta);
         }
 
         public IActionResult Index()

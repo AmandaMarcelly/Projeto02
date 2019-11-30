@@ -26,7 +26,7 @@ namespace Projeto02.Controllers
             return View();
         }
 
-        public IActionResult Cadastro()
+        public IActionResult CadastroPaciente()
         {
             Paciente paciente = new Paciente();
             
@@ -34,10 +34,10 @@ namespace Projeto02.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Cadastrar(Paciente p)
+        public IActionResult CadastroPaciente(Paciente p)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 UsuarioLogado usuarioLogado = new UsuarioLogado
                 {
                     UserName = p.Login
@@ -53,7 +53,7 @@ namespace Projeto02.Controllers
                     ModelState.AddModelError("", "Este e-mail já está sendo utilizado");
                 //}
                 //AdicionarErros(result);
-            }
+            //}
             return View(p);
         }
 
@@ -65,7 +65,7 @@ namespace Projeto02.Controllers
             }
         }
 
-        public async Task<IActionResult> Logout()
+        public IActionResult Logout()
         {
             //await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");

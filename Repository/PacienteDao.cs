@@ -9,7 +9,12 @@ namespace Repository
 {
     public class PacienteDao //: IRepository<Produto>
     {
-        private static Context ctx; //= SingletonContext.GetInstance();
+        private readonly Context ctx; //= SingletonContext.GetInstance();
+
+        public PacienteDao(Context context)
+        {
+            ctx = context;
+        }
 
         public bool CadastrarPaciente(Paciente p)
         {

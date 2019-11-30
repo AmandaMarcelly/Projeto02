@@ -1,24 +1,24 @@
-﻿@model Medico
+﻿@model Consulta
 
-<fieldset>
-    <div class="jumbotron">
+    <form asp-action="AnotacaoSobreConsulta" method="post" enctype="multipart/form-data">
+        <fieldset>
+            <div class="jumbotron">
 
-        <legend>Cadastrar Disponibilidade</legend>
-        <div asp-validation-summary="ModelOnly"
-             class="text-primary"></div>
+                <div class="form-group">
 
-        <div class="form-group">
-            <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="customSwitch1" checked="">
-                <label class="custom-control-label" for="customSwitch1">Toggle this switch element</label>
+                    <h2>Anotações</h2>
+                    <p class="text-muted">Insira aqui as suas anotações sobre a consulta.</p>
+
+                    <label for="exampleTextarea"></label>
+                    <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-outline-primary">Salvar</button>
+                <button type="button" class="btn btn-outline-primary">Voltar</button>
+
+
+
             </div>
-
-
-            <button type="button" class="btn btn-outline-primary">Cadastrar</button>
-
-
-        </div>
-
-</fieldset>
-
+        </fieldset>
+    </form>
 

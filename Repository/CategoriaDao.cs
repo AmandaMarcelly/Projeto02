@@ -8,11 +8,14 @@ namespace Repository
 {
     public class CategoriaDao
     {
-        private Context ctx; //= SingletonContext.GetInstance();
+        private readonly Context ctx; //= SingletonContext.GetInstance();
 
-        public Categoria BuscarCategoriaPorNome
-            (Categoria c) =>
-            ctx.Categorias.FirstOrDefault
+        public CategoriaDao(Context context)
+        {
+            ctx = context;
+        }
+
+        public Categoria BuscarCategoriaPorNome (Categoria c) => ctx.Categorias.FirstOrDefault
             (x => x.Nome.Equals(c.Nome));
 
         public List<Categoria> ListarCategoria() => ctx.Categorias.ToList();

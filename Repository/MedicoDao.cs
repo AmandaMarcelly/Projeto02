@@ -9,7 +9,12 @@ namespace Repository
 {
     public class MedicoDao
     {
-        private static Context ctx; //= SingletonContext.GetInstance();
+        private readonly Context ctx; //= SingletonContext.GetInstance();
+
+        public MedicoDao (Context context)
+        {
+            ctx = context;
+        }
 
         public bool CadastrarMedico(Medico m)
         {
