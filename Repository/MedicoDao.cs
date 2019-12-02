@@ -27,12 +27,6 @@ namespace Repository
             return false;
         }
 
-        public List<Medico> ListarMedico() => ctx.Medicos.Include("Especialidade").ToList();
-
-        public Medico BuscarMedicoPorEspecialidade(Medico m)
-        {
-            return ctx.Medicos.FirstOrDefault(x => x.Especialidade.Equals(m.Especialidade));
-        }
         public List<Medico> BuscarMedicosPorCategoria(int CategoriaId)
         {
             return ctx.Medicos.Where(x => x.Categoria.CategoriaId.Equals(CategoriaId)).ToList();

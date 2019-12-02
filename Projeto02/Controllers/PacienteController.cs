@@ -20,7 +20,13 @@ namespace Projeto02.Controllers
           //  _userManager = userManager;
             //_signInManager = signInManager;
         }
-    
+
+
+        public IActionResult MenuPrincipalPaciente()
+        {
+            return View();
+        }
+
         public IActionResult Index()
         {
             return View();

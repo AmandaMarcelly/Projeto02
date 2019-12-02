@@ -30,7 +30,7 @@ namespace Projeto02.Controllers
             //_signInManager = signInManager;
         }
 
-        public IActionResult Index()
+        public IActionResult MenuPrincipalMedico()
         {
             return View();
         }
