@@ -17,21 +17,72 @@
                       class="text-primary"></span>
             </div>
 
-            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button type="button" class="btn btn-primary">Primary</button>
-                <div class="btn-group show" role="group">
-                    <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></button>
-                    <div class="dropdown-menu show" aria-labelledby="btnGroupDrop1" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 48px, 0px);" x-placement="bottom-start">
-                        <a class="dropdown-item" href="#">Dropdown link</a>
-                        <a class="dropdown-item" href="#">Dropdown link</a>
+            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Especialidades</label>
+            <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                <option selected>Especialidades</option>
+                <option value="1">Especilidade01</option>
+                <option value="2">Especialidade02</option>
+                <option value="3">Três</option>
+            </select>
+
+            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Médicos</label>
+            <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                <option selected>Médicos</option>
+                <option value="1">Medico01</option>
+                <option value="2">Médico02</option>
+                <option value="3">Médico03</option>
+            </select></br></br>
+
+
+            <div class="container">
+                <div class="row">
+                    <div class='col-sm-6'>
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker1'>
+                                <input type='text' class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
                     </div>
+                    <script type="text/javascript">
+                        $(function () {
+                            $('#datetimepicker1').datetimepicker();
+                        });
+                    </script>
                 </div>
             </div>
 
+            <div class="container">
+                <div class="row">
+                    <div class='col-sm-6'>
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker3'>
+                                <input type='text' class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        $(function () {
+                            $('#datetimepicker3').datetimepicker({
+                                format: 'LT'
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
 
-
-
-
+            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Marque um horário disponível</label>
+            <select class="custom-select" multiple>
+                <option selected>Horários Disponíveis:</option>
+                <option value="1">Um</option>
+                <option value="2">Dois</option>
+                <option value="3">Três</option>
+            </select> </br></br>
 
 
             <button type="submit" class="btn btn-outline-primary">Cadastrar</button>

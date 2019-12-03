@@ -20,6 +20,12 @@ namespace Projeto02.Controllers
             _consultaDao = consultaDao;
         }
 
+        public IActionResult CadastroConsulta()
+        {
+            return View();
+        }
+
+
         public IActionResult AnotacaoSobreConsulta(Consulta consulta)
         {
             _consulta = consulta;
