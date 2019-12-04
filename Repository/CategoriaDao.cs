@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Repository
 {
-    public class CategoriaDao
+    public class CategoriaDao : IRepository<Categoria>
     {
         private readonly Context ctx; //= SingletonContext.GetInstance();
 
@@ -36,5 +36,25 @@ namespace Repository
             return ctx.Categorias.Find(id);
         }
 
+        public bool Cadastrar(Categoria c)
+        {
+            if (BuscarCategoriaPorNome(c) == null)
+            {
+                ctx.Categorias.Add(c);
+                ctx.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public List<Categoria> ListarTodos()
+        {
+            return ctx.Categorias.ToList();
+        }
+
+        public Categoria BuscarPorId(int? id)
+        {
+            return ctx.Categorias.Find(id);
+        }
     }
 }

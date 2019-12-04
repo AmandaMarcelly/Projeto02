@@ -9,11 +9,11 @@
 
         <div class="form-group">
 
-            <button type="button" class="btn btn-primary btn-lg btn-block">Alterar Cadastro</button>
-            <button type="button" class="btn btn-primary btn-lg btn-block">Excluir Cadastro</button>
-            <button type="button" class="btn btn-primary btn-lg btn-block">Minhas Consultas</button>
-            <button type="button" class="btn btn-primary btn-lg btn-block">Cadastrar Categoria</button>
-            <button type="button" class="btn btn-primary btn-lg btn-block">Cadastrar Disponibilidade</button>
+            <a asp-action="CadastroMedico" class="btn btn-primary btn-lg btn-block">Alterar Cadastro</a>
+            <a asp-action="RemoverMedico" class="btn btn-primary btn-lg btn-block">Excluir Cadastro</a>
+            <a asp-controller="Consulta" asp-action="CadastroConsulta" class="btn btn-primary btn-lg btn-block">Minhas Consultas</a>
+            <a asp-controller="Categoria" asp-action="CadastroCategoria" class="btn btn-primary btn-lg btn-block">Cadastrar Categoria</a>
+            <a asp-controller="Medico" asp-action="DisponibilidadeMedico" class="btn btn-primary btn-lg btn-block">Cadastrar Disponibilidade</a>
 
         </div>
 

@@ -10,7 +10,7 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20191124223717_CriarBD")]
+    [Migration("20191204230658_CriarBD")]
     partial class CriarBD
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,99 @@ namespace Repository.Migrations
                 .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Domain.Categoria", b =>
+                {
+                    b.Property<int>("CategoriaId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Nome")
+                        .IsRequired();
+
+                    b.HasKey("CategoriaId");
+
+                    b.ToTable("Categorias");
+                });
+
+            modelBuilder.Entity("Domain.Consulta", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Anotacao")
+                        .IsRequired();
+
+                    b.Property<DateTime>("CriadoEm");
+
+                    b.Property<int?>("MedicoId");
+
+                    b.Property<int?>("PacienteId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MedicoId");
+
+                    b.HasIndex("PacienteId");
+
+                    b.ToTable("Consultas");
+                });
+
+            modelBuilder.Entity("Domain.Disponibilidade", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("MedicoId");
+
+                    b.Property<bool>("Quarta");
+
+                    b.Property<bool>("Quinta");
+
+                    b.Property<bool>("Sabado");
+
+                    b.Property<bool>("Segunda");
+
+                    b.Property<bool>("Sexta");
+
+                    b.Property<bool>("Terca");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MedicoId");
+
+                    b.ToTable("Disponibilidades");
+                });
+
+            modelBuilder.Entity("Domain.Medico", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CategoriaId");
+
+                    b.Property<string>("Crm")
+                        .IsRequired();
+
+                    b.Property<string>("Login");
+
+                    b.Property<string>("Nome")
+                        .IsRequired();
+
+                    b.Property<string>("Senha");
+
+                    b.Property<string>("Uf")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoriaId");
+
+                    b.ToTable("Medicos");
+                });
 
             modelBuilder.Entity("Domain.Paciente", b =>
                 {
@@ -32,8 +125,12 @@ namespace Repository.Migrations
 
                     b.Property<int>("Idade");
 
+                    b.Property<string>("Login");
+
                     b.Property<string>("Nome")
                         .IsRequired();
+
+                    b.Property<string>("Senha");
 
                     b.Property<string>("Telefone")
                         .IsRequired();
@@ -41,6 +138,57 @@ namespace Repository.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Paciente");
+                });
+
+            modelBuilder.Entity("Domain.UsuarioLogado", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -153,55 +301,30 @@ namespace Repository.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Repository.UsuarioLogado", b =>
+            modelBuilder.Entity("Domain.Consulta", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.HasOne("Domain.Medico", "Medico")
+                        .WithMany()
+                        .HasForeignKey("MedicoId");
 
-                    b.Property<int>("AccessFailedCount");
+                    b.HasOne("Domain.Paciente", "Paciente")
+                        .WithMany()
+                        .HasForeignKey("PacienteId");
+                });
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
+            modelBuilder.Entity("Domain.Disponibilidade", b =>
+                {
+                    b.HasOne("Domain.Medico", "Medico")
+                        .WithMany()
+                        .HasForeignKey("MedicoId");
+                });
 
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers");
+            modelBuilder.Entity("Domain.Medico", b =>
+                {
+                    b.HasOne("Domain.Categoria", "Categoria")
+                        .WithMany("Medicos")
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -214,7 +337,7 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Repository.UsuarioLogado")
+                    b.HasOne("Domain.UsuarioLogado")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -222,7 +345,7 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Repository.UsuarioLogado")
+                    b.HasOne("Domain.UsuarioLogado")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -235,7 +358,7 @@ namespace Repository.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Repository.UsuarioLogado")
+                    b.HasOne("Domain.UsuarioLogado")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -243,7 +366,7 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Repository.UsuarioLogado")
+                    b.HasOne("Domain.UsuarioLogado")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

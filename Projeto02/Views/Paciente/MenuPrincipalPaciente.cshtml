@@ -1,4 +1,5 @@
-﻿@model Paciente
+﻿@inject Microsoft.AspNetCore.Identity.UserManager<UsuarioLogado> UserManager
+@model Paciente
 
 <fieldset>
     <div class="jumbotron">
@@ -9,10 +10,10 @@
 
         <div class="form-group">
 
-            <button type="button" class="btn btn-primary btn-lg btn-block">Alterar Cadastro</button>
-            <button type="button" class="btn btn-primary btn-lg btn-block">Excluir Cadastro</button>
-            <button type="button" class="btn btn-primary btn-lg btn-block">Agendar Consulta</button>
-            <button type="button" class="btn btn-primary btn-lg btn-block">Alterar Consulta</button>
+            <a asp-action="CadastroPaciente" class="btn btn-primary btn-lg btn-block">Alterar Cadastro</a>
+            <a asp-action="RemoverPaciente" class="btn btn-primary btn-lg btn-block">Excluir Cadastro</a>
+            <a asp-controller="Consulta" asp-action="CadastroConsulta" class="btn btn-primary btn-lg btn-block">Agendar Consulta</a>
+            <a asp-controller="Consulta" asp-action="MenuPrincipalPaciente" class="btn btn-primary btn-lg btn-block">Alterar Consulta</a>
 
         </div>
 

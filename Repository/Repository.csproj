@@ -5,6 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20191124223717_CriarBD.cs" />
+    <Compile Remove="Migrations\20191130215555_SegundaParte.cs" />
+    <Compile Remove="Migrations\20191130235349_CriarTabelas.cs" />
+    <Compile Remove="Migrations\20191130235706_CriarTabelas.cs" />
+    <Compile Remove="Migrations\20191201004917_Uf.cs" />
+    <Compile Remove="Migrations\20191202215859_CriarTabelas.cs" />
+    <Compile Remove="Migrations\20191203225001_CriarBD.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.11" />
   </ItemGroup>

@@ -1,4 +1,5 @@
-﻿
+﻿@inject Microsoft.AspNetCore.Identity.SignInManager<UsuarioLogado> SignManager
+@inject Microsoft.AspNetCore.Identity.UserManager<UsuarioLogado> UserManager
 @model Medico
 
 <form asp-action="CadastroMedico" method="post" enctype="multipart/form-data">
@@ -8,6 +9,9 @@
             <h2>Cadastrar Médico</h2>
             <div asp-validation-summary="ModelOnly"
                  class="text-primary"></div>
+
+            <input type="text" asp-for="Id"
+                   class="hidden" style="display: none" />
 
             <div class="form-group" id="Crm">
                 <label asp-for="Crm"></label>
@@ -25,14 +29,14 @@
                       class="text-primary"></span>
             </div>
 
-
-            <button type="submit" class="btn btn-outline-primary">Buscar</button></br></br>
-
-
-            <div class="form-group" id="Nome">
+            @if (!SignManager.IsSignedIn(User))
+            {
+                <button type="submit" class="btn btn-outline-primary" asp-action="BuscarCrmApi">Buscar</button>
+            }
+            </br></br><div class="form-group" id="Nome">
                 <label asp-for="Nome"></label>
                 <input type="text" asp-for="Nome"
-                      class="form-control" readonly=""></input>
+                       class="form-control" readonly=""></input>
             </div>
 
             <div class="form-group" id="Categoria">
@@ -40,11 +44,36 @@
                 <select asp-items="@ViewBag.Categorias" class="form-control" name="drpCategorias">
                     <option> -- SELECIONE --</option>
                 </select>
-                <!--input type="text" asp-for="Categoria"
-               class="form-control" />
-        <span asp-validation-for="Categoria"
-              class="text-primary"></span-->
             </div>
+            @if (!SignManager.IsSignedIn(User))
+            {
+                <legend>Dados Pessoais</legend>
+                <div class="form-group" id="Email">
+                    <label asp-for="Login"></label>
+                    <input type="text" asp-for="Login"
+                           class="form-control" />
+                </div>
+                <div class="form-group" id="Senha">
+                    <label asp-for="Senha"></label>
+                    <input type="text" asp-for="Senha"
+                           class="form-control" />
+                </div>
+                <div class="form-group" id="ConfirmacaoSenha">
+                    <label asp-for="ConfirmacaoSenha"></label>
+                    <input type="text" asp-for="ConfirmacaoSenha"
+                           class="form-control" />
+                </div>
+            }
+            else
+            {
+                <input type="text" asp-for="Login"
+                       class="hidden" style="display: none" />
+                <input type="text" asp-for="Senha"
+                       class="hidden" style="display: none" />
+                <input type="text" asp-for="ConfirmacaoSenha"
+                       class="hidden" style="display: none" value="@ViewBag.senha" />
+
+            }
 
             <button type="submit" class="btn btn-outline-primary">Cadastrar</button>
 

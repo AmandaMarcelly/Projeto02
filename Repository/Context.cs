@@ -6,6 +6,10 @@ namespace Repository
 {
     public class Context : IdentityDbContext<UsuarioLogado>
     {
+        public Context()
+        {
+        }
+
         //public DbSet<Paciente> Paciente { get; set; }
         public Context(DbContextOptions options) 
             : base(options) { }

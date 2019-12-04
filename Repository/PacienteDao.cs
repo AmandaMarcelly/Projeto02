@@ -34,11 +34,11 @@ namespace Repository
             return ctx.Pacientes.FirstOrDefault(x => x.Nome.Equals(p));
         }
 
-        /*
-        public static Paciente BuscarPacientePorLogin(Paciente p)
+        
+        public Paciente BuscarPacientePorLogin(string login)
         {
-            return ctx.Pacientes.FirstOrDefault(x => x.Login.Equals(p.Login));
-        }*/
+            return ctx.Pacientes.FirstOrDefault(x => x.Login.Equals(login));
+        }
 
         public List<Paciente> BucarPacientePorParteNome(string p)
         {

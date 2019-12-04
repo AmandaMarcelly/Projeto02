@@ -35,7 +35,7 @@ namespace Projeto02.Controllers
             //{
                 if (_categoriaDao.CadastrarCategoria(categoria))
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("MenuPrincipalMedico", "Medico");
                 }
                 ModelState.AddModelError("", "Essa categoria já existe!");
             //}

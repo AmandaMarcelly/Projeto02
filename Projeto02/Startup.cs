@@ -12,6 +12,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Repository;
+using Domain;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 namespace Projeto02
 {
     public class Startup
@@ -42,13 +46,28 @@ namespace Projeto02
             services.AddScoped<DisponibilidadeDao>();
             services.AddHttpContextAccessor();
 
-            
-
             services.AddDbContext<Context>
                 (options => options.UseSqlServer
                 (Configuration.GetConnectionString
                 ("ProjetoWeb")));
 
+            //Configuração da sessão deve ser colocada ANTES
+            //do services.AddMvc()
+            services.AddSession();
+            services.AddDistributedMemoryCache();
+
+            //Configurar o Identity na aplicação
+            services.AddIdentity<UsuarioLogado, IdentityRole>().
+                AddEntityFrameworkStores<Context>().
+                AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Paciente/Login";
+                options.LoginPath = "/Medico/Login";
+                options.AccessDeniedPath = "/Paciente/AcessoNegado";
+                options.AccessDeniedPath = "/Medico/AcessoNegado";
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -60,6 +79,7 @@ namespace Projeto02
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<Context>();
+                context.Database.Migrate();
             }
 
             if (env.IsDevelopment())
@@ -75,6 +95,7 @@ namespace Projeto02
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

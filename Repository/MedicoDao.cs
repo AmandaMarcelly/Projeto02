@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Repository
 {
-    public class MedicoDao
+    public class MedicoDao : IRepository<Medico>
     {
         private readonly Context ctx; //= SingletonContext.GetInstance();
 
@@ -27,6 +27,11 @@ namespace Repository
             return false;
         }
 
+        public List<Medico> ListarMedico()
+        {
+            return ctx.Medicos.ToList();
+        }
+        
         public List<Medico> BuscarMedicosPorCategoria(int CategoriaId)
         {
             return ctx.Medicos.Where(x => x.Categoria.CategoriaId.Equals(CategoriaId)).ToList();
@@ -36,11 +41,10 @@ namespace Repository
             return ctx.Medicos.FirstOrDefault(x => x.Nome.Equals(m.Nome));
         }
 
-        /*public static Medico BuscarMedicoPorLogin(Medico m)
+        public Medico BuscarMedicoPorLogin(string login)
         {
-            return ctx.Medicos.FirstOrDefault(x => x.Login.Equals(m.Login));
+            return ctx.Medicos.FirstOrDefault(x => x.Login.Equals(login));
         }
-        */
 
         public List<Medico> BucarMedicoPorParteNome(string m)
         {
@@ -64,8 +68,25 @@ namespace Repository
             ctx.SaveChanges();
         }
 
+        public bool Cadastrar(Medico m)
+        {
+            if (BuscarMedicoPorNome(m) == null)
+            {
+                ctx.Medicos.Add(m);
+                ctx.SaveChanges();
+                return true;
+            }
+            return false;
+        }
 
+        public List<Medico> ListarTodos()
+        {
+            return ctx.Medicos.Include(x => x.Categoria).ToList();
+        }
 
-
+        public Medico BuscarPorId(int? id)
+        {
+            return ctx.Medicos.Find(id);
+        }
     }
 }

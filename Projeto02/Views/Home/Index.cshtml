@@ -99,16 +99,16 @@
 <div class="jumbotron">
     
     <h1 class="display-3" style="text-align:center">
-        <font style="alinhamento vertical: herdar" "> <font style =" alinhamento vertical: herdar; "> Bem vindo! </font> </font> </ h1 >
+        <font style="alinhamento vertical: herdar"> <font style =" alinhamento vertical: herdar; "> Bem vindo! </font> </font> </ h1 >
 
         <p class="lead"> <font style="alinhamento vertical: herdar" "> <font style =" alinhamento vertical: herdar; "> Essa é uma plataforma de agendamento de consultas </font> </font> </p>
         <hr class="my-4">
 
         <p class="lead"> <font style="alinhamento vertical: herdar" "> <font style =" alinhamento vertical: herdar; "> Para agendar sua consulta, clique em Paciente</font> </font> </p>
-        <button type="submit" class="btn btn-outline-primary">Paciente</button>
+        <a asp-controller="Paciente" asp-action="Login" type="submit" class="btn btn-outline-primary">Paciente</a>
         
-        <p class="lead"> <font style="alinhamento vertical: herdar" "> <font style =" alinhamento vertical: herdar; "> Para disponibilizar sua agenda, clique em Médico</font> </font> </p>
-        <button type="submit" class="btn btn-outline-primary">Médico</button>
+        <p class="lead"> <font style="alinhamento vertical: herdar"> <font style =" alinhamento vertical: herdar; "> Para disponibilizar sua agenda, clique em Médico</font> </font> </p>
+        <a asp-controller="Medico" asp-action="Login" type="submit" class="btn btn-outline-primary">Médico</a>
 
 
 

@@ -7,6 +7,8 @@ using Domain;
 using Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
+using System.Net;
 
 namespace Projeto02.Controllers
 {
@@ -16,18 +18,20 @@ namespace Projeto02.Controllers
         private readonly CategoriaDao _categoriaDao;
         private readonly DisponibilidadeDao _disponibilidadeDao;
         private Medico _medico;
-        //private readonly UserManager<UsuarioLogado> _userManager;
-        //private readonly SignInManager<UsuarioLogado> _signInManager;
+        private readonly UserManager<UsuarioLogado> _userManager;
+        private readonly SignInManager<UsuarioLogado> _signInManager;
 
-        public MedicoController(MedicoDao medicoDao, CategoriaDao categoriaDao, DisponibilidadeDao disponibilidadeDao
-            //, UserManager<UsuarioLogado> userManager, SignInManager<UsuarioLogado> signInManager
+        public MedicoController(MedicoDao medicoDao, CategoriaDao categoriaDao, 
+            DisponibilidadeDao disponibilidadeDao, 
+            UserManager<UsuarioLogado> userManager, 
+            SignInManager<UsuarioLogado> signInManager
             )
         {
             _medicoDao = medicoDao;
             _categoriaDao = categoriaDao;
             _disponibilidadeDao = disponibilidadeDao;
-            //_userManager = userManager;
-            //_signInManager = signInManager;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public IActionResult MenuPrincipalMedico()
@@ -40,33 +44,49 @@ namespace Projeto02.Controllers
             ViewBag.Categorias = new SelectList(_categoriaDao.ListarCategoria(), "CategoriaId", "Nome");
             Medico medico = new Medico();
 
+            if (TempData["Crm"] != null)
+            {
+                string resultado = TempData["Crm"].ToString();
+                ResultadoJson medicoResultado = JsonConvert.DeserializeObject<ResultadoJson>(resultado);
+                medico.Nome = medicoResultado.item[0].nome;
+                medico.Uf = medicoResultado.item[0].uf;
+                medico.Crm = medicoResultado.item[0].numero;
+            }
+            else if (_userManager.GetUserName(User) != null)
+            {
+                medico = _medicoDao.BuscarMedicoPorLogin(_userManager.GetUserName(User));
+                ViewBag.senha = medico.Senha;
+            }
+
             return View(medico);
         }
 
         [HttpPost]
-        public IActionResult CadastroMedico(Medico m, int drpCategorias)
+        public async Task<IActionResult> CadastroMedico(Medico m, int drpCategorias)
         {
             ViewBag.Categorias = new SelectList(_categoriaDao.ListarCategoria(), "CategoriaId", "Nome");
 
-            //if (ModelState.IsValid)
-            //{
+            if (ModelState.IsValid)
+            {
                 UsuarioLogado usuarioLogado = new UsuarioLogado
                 {
-                    UserName = m.Login
+                    UserName = m.Login,
+                    PhoneNumber = m.Senha
                 };
-            //IdentityResult result = await _userManager.CreateAsync(usuarioLogado, m.Senha);
-            //if (result.Succeeded)
-            //{
-            //await _signInManager.SignInAsync(usuarioLogado, isPersistent: false);
-            m.Categoria = _categoriaDao.BuscarCategoriaPorId(drpCategorias);
+                IdentityResult result = await _userManager.CreateAsync(usuarioLogado, m.Senha);
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(usuarioLogado, isPersistent: false);
+                    m.Categoria = _categoriaDao.BuscarCategoriaPorId(drpCategorias);
                     if (_medicoDao.CadastrarMedico(m))
                     {
-                        return RedirectToAction("Index");
+                        return RedirectToAction("MenuPrincipalMedico");
                     }
+                    await _signInManager.SignOutAsync();
                     ModelState.AddModelError("", "Este e-mail já está sendo utilizado");
-                //}
-                //AdicionarErros(result);
-            //}
+                }
+                AdicionarErros(result);
+            }
             return View(m);
         }
 
@@ -78,9 +98,9 @@ namespace Projeto02.Controllers
             }
         }
 
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            //await _signInManager.SignOutAsync();
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
 
@@ -90,15 +110,15 @@ namespace Projeto02.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(Medico m)
+        public async Task<IActionResult> Login(Medico m)
         {
-           // var result = await _signInManager.PasswordSignInAsync(m.Login, m.Senha, true, lockoutOnFailure: false);
-            //if (result.Succeeded)
-           // {
-                return RedirectToAction("Index", "Medico");
-           // }
-           // ModelState.AddModelError("", "Falha no Login");
-            //return View();
+           var result = await _signInManager.PasswordSignInAsync(m.Login, m.Senha, true, lockoutOnFailure: false);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("MenuPrincipalMedico", "Medico");
+            }
+            ModelState.AddModelError("", "Falha no Login");
+            return View();
         }
 
 
@@ -116,25 +136,43 @@ namespace Projeto02.Controllers
         [HttpPost]
         public IActionResult DisponibilidadeMedico(Disponibilidade disponibilidade)
         {
-            //if (ModelState.IsValid)
-            //{
+            if (ModelState.IsValid)
+            {
             if (disponibilidade.Medico == null)
             {
                 disponibilidade.Medico = _medico;
                 if (_disponibilidadeDao.CadastrarDisponibilidade(disponibilidade))
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("MenuPrincipalMedico");
                 }
                 ModelState.AddModelError("", "Algum erro aconteceu");
             }
             if (_disponibilidadeDao.AlterarDisponibilidade(disponibilidade))
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("MenuPrincipalMedico");
             }
             ModelState.AddModelError("", "Algum erro aconteceu");
 
-            //}
+            }
             return View(disponibilidade);
+        }
+
+        [HttpPost]
+        public IActionResult BuscarCrmApi(Medico m)
+        {
+            string url = "https://www.consultacrm.com.br/api/index.php?tipo=crm&uf=" + m.Uf + "&q=" + m.Crm + "&chave=6345776308&destino=json";
+            WebClient client = new WebClient();
+            TempData["Crm"] = client.DownloadString(url);
+
+            return RedirectToAction(nameof(CadastroMedico));
+        }
+
+        public async Task<IActionResult> RemoverMedico()
+        {
+            Medico medico = _medicoDao.BuscarMedicoPorLogin(_userManager.GetUserName(User));
+            await Logout();
+            _medicoDao.RemoverMedico(medico);
+            return RedirectToAction("Index", "Home");
         }
     }
 }
