@@ -25,6 +25,13 @@ namespace Projeto02.Controllers
             return View();
         }
 
+        public IActionResult ListagemConsultas()
+        {
+            return View();
+        }
+
+
+
 
         public IActionResult AnotacaoSobreConsulta(Consulta consulta)
         {
