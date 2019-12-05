@@ -22,8 +22,67 @@ namespace Projeto02.Controllers
 
         public IActionResult CadastroConsulta()
         {
+            Consulta consulta = new Consulta();
+            consulta.Id = 0;
+
             return View();
         }
+
+        /*
+
+                [HttpPost]
+                public async Task<IActionResult> CadastroConsulta(Consulta c)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        if (c.Id != 0)
+                        {
+                            _consultaDao.AlterarConsulta(c);
+
+                            return RedirectToAction("MenuPrincipalPaciente", "Paciente");
+
+
+                        }
+                        else
+                        {
+                            Consulta
+                        }
+
+
+
+
+                            return RedirectToAction("MenuPrincipalPaciente", "Paciente");
+                        }
+                        else
+                        {
+                            UsuarioLogado usuarioLogado = new UsuarioLogado
+                            {
+                                UserName = p.Login,
+                                PhoneNumber = p.Senha
+                            };
+                            IdentityResult result = await _userManager.CreateAsync(usuarioLogado, p.Senha);
+                            if (result.Succeeded)
+                            {
+                                await _signInManager.SignInAsync(usuarioLogado, isPersistent: false);
+                                if (_pacienteDAO.CadastrarPaciente(p))
+                                {
+                                    return RedirectToAction("MenuPrincipalPaciente");
+                                }
+                                await _signInManager.SignOutAsync();
+                                ModelState.AddModelError("", "Este login já está sendo utilizado");
+                            }
+                            AdicionarErros(result);
+                        }
+                    }
+                    return View(p);
+                }
+                */
+
+
+
+
+
+
 
         public IActionResult ListagemConsultas()
         {
