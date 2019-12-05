@@ -40,8 +40,8 @@
             </div>
 
             <div class="form-group" id="Categoria">
-                <label asp-for="Categoria"></label>
-                <select asp-items="@ViewBag.Categorias" class="form-control" name="drpCategorias">
+                <label>Categoria</label>
+                <select asp-items="@ViewBag.Categorias" class="form-control" name="Categoria">
                     <option> -- SELECIONE --</option>
                 </select>
             </div>
@@ -63,6 +63,7 @@
                     <input type="text" asp-for="ConfirmacaoSenha"
                            class="form-control" />
                 </div>
+                <button type="submit" class="btn btn-outline-primary">Cadastrar</button>
             }
             else
             {
@@ -72,10 +73,10 @@
                        class="hidden" style="display: none" />
                 <input type="text" asp-for="ConfirmacaoSenha"
                        class="hidden" style="display: none" value="@ViewBag.senha" />
+                <a asp-action="MenuPrincipalMedico" class="btn btn-outline-primary">Voltar</a>
 
             }
 
-            <button type="submit" class="btn btn-outline-primary">Cadastrar</button>
 
 
         </div>

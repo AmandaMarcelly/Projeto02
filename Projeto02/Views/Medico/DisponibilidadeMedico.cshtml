@@ -1,5 +1,5 @@
 ﻿
-@model Medico
+@model Disponibilidade
 
 <form asp-action="DisponibilidadeMedico" method="post" enctype="multipart/form-data">
     <fieldset>
@@ -16,41 +16,36 @@
                 </div></br>
 
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="customSwitch1" checked="">
-                    <label class="custom-control-label" for="customSwitch1">Segunda-Feira</label>
+                    <input type="checkbox" asp-for="Segunda" class="custom-control-input" id="customSwitch2">
+                    <label class="custom-control-label" for="customSwitch2">Segunda-Feira</label>
                 </div>
 
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="customSwitch1" checked="">
-                    <label class="custom-control-label" for="customSwitch1">Terça-Feira</label>
+                    <input type="checkbox" asp-for="Terca" class="custom-control-input" id="customSwitch3">
+                    <label class="custom-control-label" for="customSwitch3">Terça-Feira</label>
                 </div>
 
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="customSwitch1" checked="">
-                    <label class="custom-control-label" for="customSwitch1">Quarta-Feira</label>
+                    <input type="checkbox" asp-for="Quarta" class="custom-control-input" id="customSwitch4">
+                    <label class="custom-control-label" for="customSwitch4">Quarta-Feira</label>
                 </div>
 
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="customSwitch1" checked="">
-                    <label class="custom-control-label" for="customSwitch1">Quinta-Feira</label>
+                    <input type="checkbox" asp-for="Quinta" class="custom-control-input" id="customSwitch5">
+                    <label class="custom-control-label" for="customSwitch5">Quinta-Feira</label>
                 </div>
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="customSwitch1" checked="">
-                    <label class="custom-control-label" for="customSwitch1">Sexta-Feira</label>
-                </div>
-
-                <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="customSwitch1" checked="">
-                    <label class="custom-control-label" for="customSwitch1">Sábado</label>
+                    <input type="checkbox" asp-for="Sexta" class="custom-control-input" id="customSwitch6">
+                    <label class="custom-control-label" for="customSwitch6">Sexta-Feira</label>
                 </div>
 
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="customSwitch1" checked="">
-                    <label class="custom-control-label" for="customSwitch1">Domingo</label>
-                </div></br>
+                    <input type="checkbox" asp-for="Sabado" class="custom-control-input" id="customSwitch7">
+                    <label class="custom-control-label" for="customSwitch7">Sábado</label>
+                </div>
 
-
-
+                <input type="text" asp-for="Medico" class="hidden" style="display: none" />
+                <input type="text" asp-for="Id" class="hidden" style="display: none" />
                 <button type="submit" class="btn btn-outline-primary">Cadastrar</button>
 
 

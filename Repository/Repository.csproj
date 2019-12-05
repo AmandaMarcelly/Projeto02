@@ -12,6 +12,7 @@
     <Compile Remove="Migrations\20191201004917_Uf.cs" />
     <Compile Remove="Migrations\20191202215859_CriarTabelas.cs" />
     <Compile Remove="Migrations\20191203225001_CriarBD.cs" />
+    <Compile Remove="Migrations\20191204230658_CriarBD.cs" />
   </ItemGroup>
 
   <ItemGroup>

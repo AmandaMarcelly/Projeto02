@@ -17,7 +17,6 @@ namespace Projeto02.Controllers
         private readonly MedicoDao _medicoDao;
         private readonly CategoriaDao _categoriaDao;
         private readonly DisponibilidadeDao _disponibilidadeDao;
-        private Medico _medico;
         private readonly UserManager<UsuarioLogado> _userManager;
         private readonly SignInManager<UsuarioLogado> _signInManager;
 
@@ -62,12 +61,13 @@ namespace Projeto02.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CadastroMedico(Medico m, int drpCategorias)
+        public async Task<IActionResult> CadastroMedico(Medico m, int Categoria)
         {
             ViewBag.Categorias = new SelectList(_categoriaDao.ListarCategoria(), "CategoriaId", "Nome");
+            m.Categoria = _categoriaDao.BuscarCategoriaPorId(Categoria);
 
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+           // {
                 UsuarioLogado usuarioLogado = new UsuarioLogado
                 {
                     UserName = m.Login,
@@ -77,7 +77,6 @@ namespace Projeto02.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(usuarioLogado, isPersistent: false);
-                    m.Categoria = _categoriaDao.BuscarCategoriaPorId(drpCategorias);
                     if (_medicoDao.CadastrarMedico(m))
                     {
                         return RedirectToAction("MenuPrincipalMedico");
@@ -86,7 +85,7 @@ namespace Projeto02.Controllers
                     ModelState.AddModelError("", "Este e-mail já está sendo utilizado");
                 }
                 AdicionarErros(result);
-            }
+            //}
             return View(m);
         }
 
@@ -122,14 +121,21 @@ namespace Projeto02.Controllers
         }
 
 
-        public IActionResult DisponibilidadeMedico(int id)
+        public IActionResult DisponibilidadeMedico()
         {
-            _medico = _medicoDao.BuscarMedicoPorId(id);
-            Disponibilidade disponibilidade = _disponibilidadeDao.BuscarDisponibilidadePorMedico(_medico);
-            if (disponibilidade != null)
+            Medico _medico = _medicoDao.BuscarMedicoPorLogin(_userManager.GetUserName(User));
+            List<Disponibilidade> disponibilidades = _disponibilidadeDao.ListarDisponiblidade();
+            Disponibilidade disponibilidade = new Disponibilidade();
+
+            foreach (var dipo in disponibilidades)
             {
-                disponibilidade = _disponibilidadeDao.BuscarDisponibilidadePorMedico(_medico);
+                if (dipo.Medico.Id == _medico.Id)
+                {
+                    disponibilidade = dipo;
+                    break;
+                }
             }
+
             return View(disponibilidade);
         }
 
@@ -138,20 +144,22 @@ namespace Projeto02.Controllers
         {
             if (ModelState.IsValid)
             {
-            if (disponibilidade.Medico == null)
-            {
-                disponibilidade.Medico = _medico;
-                if (_disponibilidadeDao.CadastrarDisponibilidade(disponibilidade))
+                disponibilidade.Medico = _medicoDao.BuscarMedicoPorLogin(_userManager.GetUserName(User));
+                if (disponibilidade.Id == 0)
+                {
+                    
+
+                    if (_disponibilidadeDao.CadastrarDisponibilidade(disponibilidade))
+                    {
+                        return RedirectToAction("MenuPrincipalMedico");
+                    }
+                    ModelState.AddModelError("", "Algum erro aconteceu");
+                }
+                if (_disponibilidadeDao.AlterarDisponibilidade(disponibilidade))
                 {
                     return RedirectToAction("MenuPrincipalMedico");
                 }
                 ModelState.AddModelError("", "Algum erro aconteceu");
-            }
-            if (_disponibilidadeDao.AlterarDisponibilidade(disponibilidade))
-            {
-                return RedirectToAction("MenuPrincipalMedico");
-            }
-            ModelState.AddModelError("", "Algum erro aconteceu");
 
             }
             return View(disponibilidade);

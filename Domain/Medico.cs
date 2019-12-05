@@ -17,7 +17,6 @@ namespace Domain
         public string Crm { get; set; }
         
         [Display(Name = "Categoria:")]
-        [Required(ErrorMessage = "Campo obrigatório!")]
         public Categoria Categoria { get; set; }
 
         [Display(Name = "Uf:")]

@@ -192,7 +192,7 @@ namespace Repository.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Nome = table.Column<string>(nullable: false),
                     Crm = table.Column<string>(nullable: false),
-                    CategoriaId = table.Column<int>(nullable: false),
+                    CategoriaId = table.Column<int>(nullable: true),
                     Uf = table.Column<string>(nullable: false),
                     Login = table.Column<string>(nullable: true),
                     Senha = table.Column<string>(nullable: true)
@@ -205,7 +205,7 @@ namespace Repository.Migrations
                         column: x => x.CategoriaId,
                         principalTable: "Categorias",
                         principalColumn: "CategoriaId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
